@@ -1,21 +1,52 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mt-2 mb-2">
 
-<router-outlet></router-outlet>
+    </div>
+      <div class="col-md-12">
+          <button class="btn btn-primary m-2" (click)="year = 2015" [ngClass]="{'selected': year == 2015}">2015</button>
+          <button class="btn btn-primary m-2" (click)="year = 2017" [ngClass]="{'selected': year == 2017}">2017</button>
+          <button class="btn btn-primary m-2" (click)="year = 2018" [ngClass]="{'selected': year == 2018}">2018</button>
+          <button class="btn btn-primary m-2" (click)="year = 0" [ngClass]="{'selected': year == 0}">Mind</button>
+      </div>
+
+
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img [src]="modalSrc" alt="" style="width: 100%">
+      </div>
+    </ng-template>
+
+    <p><a href="/assets">Minden fájl listázása: </a></p>
+
+    <ng-container *ngFor="let lelet of leletek | ambulanceYear: 'asc' | yearP:year">
+
+      <div class="col-md-12">
+
+        <h6>{{ lelet.medicine}}</h6>
+        <p>{{ lelet.complaint }} <br> - <br> {{lelet.status}}</p>
+        <small>{{lelet.date }} </small>
+        <p *ngIf="lelet?.docs.length > 0">
+          doksik:
+          <ng-container *ngFor="let doc of lelet.docs">
+            <div>
+
+              <button (click)="modalSrc = 'assets/' + doc; openModal(template)"  >Felugró</button>
+              <a class="btn btn-sm btn-primary m-1" href="assets/{{ doc}}" target="_blank" > Új ablak - {{ doc}}</a> &nbsp;
+            </div>
+          </ng-container>
+
+        </p>
+        <hr>
+      </div>
+
+    </ng-container>
+  </div>
+
+</div>
